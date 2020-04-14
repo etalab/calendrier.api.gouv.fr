@@ -1,0 +1,27 @@
+name: "CRON: build and deploy"
+
+on:
+  push:
+  schedule:
+    - cron: "30 14 * * *"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Prepare data
+        run: |
+          wget https://github.com/AntoineAugusti/jours-feries-france-data/archive/master.zip
+          unzip master.zip
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: jours-feries-france-data-master/data/json
