@@ -14,10 +14,39 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test OpenAPI 3 specifications
+        run: npx openapi openapi.yml
+
       - name: Prepare data
         run: |
           wget https://github.com/AntoineAugusti/jours-feries-france-data/archive/master.zip
           unzip master.zip
+
+      - name: Test API specifications
+        run: |
+          nohup python3 -m http.server 8888 --directory jours-feries-france-data-master/data/json &
+          sleep 2
+          npx dredd openapi.yml http://localhost:8888
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
