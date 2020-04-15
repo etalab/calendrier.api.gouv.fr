@@ -35,7 +35,7 @@ jobs:
         run: npm install
 
       - name: Test OpenAPI 3 specifications
-        run: npx openapi openapi.yml
+        run: npx openapi validate openapi.yml
 
       - name: Prepare data
         run: |
