@@ -48,6 +48,10 @@ jobs:
           sleep 2
           npx dredd openapi.yml http://localhost:8888
 
+      - name: Copy HTML documentation
+        run: |
+          cp index.html jours-feries-france-data-master/data/json/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
