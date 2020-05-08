@@ -39,7 +39,7 @@ jobs:
 
       - name: Prepare data
         run: |
-          wget https://github.com/AntoineAugusti/jours-feries-france-data/archive/master.zip
+          wget https://github.com/etalab/jours-feries-france-data/archive/master.zip
           unzip master.zip
 
       - name: Test API specifications
