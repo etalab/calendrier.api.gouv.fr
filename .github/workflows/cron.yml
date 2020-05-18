@@ -52,6 +52,10 @@ jobs:
         run: |
           cp index.html jours-feries-france-data-master/data/json/
 
+      - name: Copy OpenAPI file
+        run: |
+          cp openapi.yml jours-feries-france-data-master/data/json/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
