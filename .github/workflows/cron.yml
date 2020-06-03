@@ -7,6 +7,8 @@ on:
 
 jobs:
   build-and-deploy:
+    env:
+      DATA_FOLDER: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -37,6 +39,9 @@ jobs:
       - name: Test OpenAPI 3 specifications
         run: npx openapi validate openapi.yml
 
+      - name: Creation destination folder
+        run: mkdir -p $DATA_FOLDER/jours-feries
+
       - name: Prepare data
         run: |
           wget https://github.com/etalab/jours-feries-france-data/archive/master.zip
@@ -50,15 +55,25 @@ jobs:
 
       - name: Copy HTML documentation
         run: |
-          cp index.html jours-feries-france-data-master/data/json/
+          cp index.html $DATA_FOLDER
+          cp index.html $DATA_FOLDER/jours-feries
 
       - name: Copy OpenAPI file
         run: |
-          cp openapi.yml jours-feries-france-data-master/data/json/
+          cp openapi.yml $DATA_FOLDER
+          cp openapi.yml $DATA_FOLDER/jours-feries
+
+      - name: Copy JSON files
+        run: |
+          cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/
+          cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/jours-feries/
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: jours-feries-france-data-master/data/json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.DATA_FOLDER }}
+          user_name: 'actions-user'
+          user_email: 'actions@github.com'
+          force_orphan: true
