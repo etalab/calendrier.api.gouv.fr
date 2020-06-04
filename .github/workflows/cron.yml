@@ -77,3 +77,4 @@ jobs:
           user_name: 'actions-user'
           user_email: 'actions@github.com'
           force_orphan: true
+          cname: calendrier.api.gouv.fr
