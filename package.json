@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@redocly/openapi-cli": "^0.12.1",
-    "dredd": "^13.0.2"
+    "dredd": "^13.0.2",
+    "minimist": ">=0.2.1"
   }
 }
