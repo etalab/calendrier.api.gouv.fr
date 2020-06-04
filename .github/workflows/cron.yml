@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     env:
-      DATA_FOLDER: build
+      DATA_FOLDER: build/jours-feries
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -40,7 +40,7 @@ jobs:
         run: npx openapi validate openapi.yml
 
       - name: Creation destination folder
-        run: mkdir -p $DATA_FOLDER/jours-feries
+        run: mkdir -p $DATA_FOLDER
 
       - name: Prepare data
         run: |
@@ -55,18 +55,16 @@ jobs:
 
       - name: Copy HTML documentation
         run: |
+          cp landing.html $DATA_FOLDER/../
           cp index.html $DATA_FOLDER
-          cp index.html $DATA_FOLDER/jours-feries
 
       - name: Copy OpenAPI file
         run: |
           cp openapi.yml $DATA_FOLDER
-          cp openapi.yml $DATA_FOLDER/jours-feries
 
       - name: Copy JSON files
         run: |
           cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/
-          cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/jours-feries/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
