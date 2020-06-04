@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Jours fériés en France
 servers:
-  - url: https://etalab.github.io/jours-feries-france-api/
+  - url: https://calendrier.api.gouv.fr/jours-feries/
 paths:
   /{zone}.json:
     get:
