@@ -55,17 +55,15 @@ jobs:
 
       - name: Copy HTML documentation
         run: |
-          cp index.html $DATA_FOLDER
+          cp landing.html $DATA_FOLDER/index.html
           cp index.html $DATA_FOLDER/jours-feries
 
       - name: Copy OpenAPI file
         run: |
-          cp openapi.yml $DATA_FOLDER
           cp openapi.yml $DATA_FOLDER/jours-feries
 
       - name: Copy JSON files
         run: |
-          cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/
           cp -r jours-feries-france-data-master/data/json/. $DATA_FOLDER/jours-feries/
 
       - name: Deploy to GitHub Pages
