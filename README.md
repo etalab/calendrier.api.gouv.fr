@@ -6,7 +6,7 @@ API JSON des jours fériés en France.
 
 Utilise l'[export des données](https://github.com/etalab/jours-feries-france-data). Rendez-vous sur [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/jours-feries-en-france/) si vous souhaitez simplement un export des données.
 
-La documentation est [accessible en ligne](https://etalab.github.io/jours-feries-france-api/). Un [fichier OpenAPI](openapi.yml) est mis à disposition.
+La documentation est [accessible en ligne](https://calendrier.api.gouv.fr/jours-feries/). Un [fichier OpenAPI](openapi.yml) est mis à disposition.
 
 ## Licences
 - Code sous licence MIT
