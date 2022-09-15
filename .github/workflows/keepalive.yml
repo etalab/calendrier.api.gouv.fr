@@ -1,0 +1,23 @@
+name: Keep-Alive
+on:
+  schedule:
+    - cron: "42 0 1 * *"
+jobs:
+  keep_alive:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Add or update .keepalive
+      run: echo $(date +'%s') > .keepalive
+    - name: Commit .keepalive
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .
+          git commit -m "Still alive on $(date +'%B %d, %Y %T (%Z)')"
+          git push origin $(git branch --show-current)
+        else
+          echo "Oops, seems the keep-alive failed!"
+          exit 1
+        fi
