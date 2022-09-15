@@ -14,7 +14,7 @@ jobs:
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
         if [ -n "$(git status --porcelain)" ]; then
-          git add .
+          git add .keepalive
           git commit -m "Still alive on $(date +'%B %d, %Y %T (%Z)')"
           git push origin $(git branch --show-current)
         else
