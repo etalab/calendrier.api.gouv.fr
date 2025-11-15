@@ -1,0 +1,88 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Jours fériés en France
+servers:
+  - url: https://calendrier.api.gouv.fr/jours-feries/
+paths:
+  /{zone}.json:
+    get:
+      summary: Liste les jours fériés pour une zone, 20 ans dans le passé et 5 ans dans le futur
+      parameters:
+        - name: zone
+          in: path
+          description: Le nom de la zone
+          required: true
+          example: metropole
+          schema:
+            $ref: '#/components/schemas/Zone'
+      responses:
+        '200':
+          description: Les jours fériés
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dates"
+  /{zone}/{annee}.json:
+    get:
+      summary: Liste les jours fériés pour une zone, pour une année
+      parameters:
+        - name: zone
+          in: path
+          description: Le nom de la zone
+          required: true
+          example: metropole
+          schema:
+            $ref: '#/components/schemas/Zone'
+        - name: annee
+          in: path
+          description: L'année pour les jours fériés
+          required: true
+          example: 2025
+          schema:
+            type: integer
+            example: 2025
+      responses:
+        '200':
+          description: Les jours fériés
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dates"
+components:
+  schemas:
+    Dates:
+      description: Les dates et noms des jours fériés. Les clés sont les dates en ISO 8601, les valeurs sont les noms des jours fériés.
+      type: object
+      additionalProperties:
+        type: string
+      example:
+        "2025-01-01": "Jour de l'an"
+        "2025-04-21": "Lundi de Pâques"
+        "2025-05-01": "Fête du Travail"
+        "2025-05-08": "Victoire des alliés"
+        "2025-05-29": "Ascension"
+        "2025-06-09": "Lundi de Pentecôte"
+        "2025-07-14": "Fête Nationale"
+        "2025-08-15": "Assomption"
+        "2025-11-01": "Toussaint"
+        "2025-11-11": "Armistice"
+        "2025-12-25": "Noël"
+    Zone:
+      type: string
+      description: Nom des zones reconnues
+      example: metropole
+      enum:
+        - alsace-moselle
+        - guadeloupe
+        - guyane
+        - la-reunion
+        - martinique
+        - mayotte
+        - metropole
+        - nouvelle-caledonie
+        - polynesie-francaise
+        - saint-barthelemy
+        - saint-martin
+        - saint-pierre-et-miquelon
+        - wallis-et-futuna
